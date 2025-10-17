@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "load_data_student.h": "c",
+        "stdio.h": "c",
+        "linear_regression.h": "c",
+        "compare": "c"
+    }
+}
