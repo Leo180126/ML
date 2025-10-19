@@ -1,4 +1,4 @@
-#include "../include/load_data_student.h"
+#include "../include/load_data.h"
 void loadData(DataSet *p, const char *filename){
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -50,7 +50,7 @@ void freeDataSet(DataSet *p){
 }
 void splitTrainTest(DataSet *p, double testPercent){
     p->trainSize = p->numOfExample*(1-testPercent);
-    p->testSize = p->numOfExample-p->trainSize;
+    p->testSize = p->numOfExample - p->trainSize;
 }
 
 void createTensor(DataSet *p){

@@ -4,6 +4,7 @@
         "load_data_student.h": "c",
         "stdio.h": "c",
         "linear_regression.h": "c",
-        "compare": "c"
+        "compare": "c",
+        "logistic_regression.h": "c"
     }
 }

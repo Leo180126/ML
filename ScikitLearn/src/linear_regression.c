@@ -75,6 +75,7 @@ void printWeight(LinearRegression *p){
     }
 }
 void MSEScore(LinearRegression *p, Tensor X_test, Tensor y_test){
+    insColTo2DTensor(&X_test, 1, 0);
     double lost = 0;
     Tensor y_hat, X_i;
     init2DTensor(&y_hat, 1, 1);

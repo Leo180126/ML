@@ -119,33 +119,38 @@ void insTo1DTensor(Tensor *p, double var, int des){
     }
     p->data[des] = var; 
 }
-void insColTo2DTensor(Tensor *p, double var, int des){
-    p->size += p->dim[1];
-    p->dim[0]++;
+void insColTo2DTensor(Tensor *p, double var, int des) {
+    int old_rows = p->dim[0];
+    int cols = p->dim[1];
+    int new_rows = old_rows + 1;
+    int new_size = new_rows * cols;
 
-    double *temp = realloc(p->data, p->size*sizeof(double));
-    if(temp == NULL){
-        perror("realloc failed");
+    double *old_data = p->data;
+
+    // cấp phát vùng mới
+    double *new_data = (double *)malloc(new_size * sizeof(double));
+    if (!new_data) {
+        perror("malloc failed");
         exit(EXIT_FAILURE);
     }
-    p->data = temp;
 
-    temp = (double *)malloc(p->size*sizeof(double));
-    for(int i=0; i<p->size; i++){
-        temp[i] = p->data[i];
-    }
-    int dem = 0;
-    for(int i=0; i<p->dim[1]; i++){
-        for(int j=0; j<p->dim[0]; j++){
-            if(j == des){
-                p->data[i*p->dim[0] + j] = var;
-            }
-            else{
-                p->data[i*p->dim[0] + j] = temp[dem++];
-            }
+    // duyệt qua từng cột và chèn thêm hàng tại vị trí 'des'
+    for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < new_rows; r++) {
+            if (r == des)
+                new_data[c * new_rows + r] = var;
+            else if (r < des)
+                new_data[c * new_rows + r] = old_data[c * old_rows + r];
+            else
+                new_data[c * new_rows + r] = old_data[c * old_rows + (r - 1)];
         }
     }
-    free(temp);
+
+    free(old_data);
+
+    p->data = new_data;
+    p->dim[0] = new_rows;
+    p->size = new_size;
 }
 int tensorCmp(Tensor *a, Tensor *b){
     int cmp = a->numOfDim - b->numOfDim;
@@ -241,5 +246,19 @@ void addScalarToTensor(Tensor *p, double var){
 void mutilScalarToTensor(Tensor *p, double var){
     for(int i=0; i<p->size; i++){
         p->data[i] *= var;
+    }
+}
+void elementWiseMutil(Tensor *ans, Tensor *a, Tensor *b){
+    if(a->size != b->size){
+        printf("Hai tensor khong cung kich thuoc");
+        return;
+    }
+    for(int i=0; i<a->size; i++){
+        ans->data[i] = a->data[i] * b->data[i];
+    }
+}
+void assignTensorWithNum(Tensor *p, double var){
+    for(int i=0; i<p->size; i++){
+        p->data[i] = var;
     }
 }

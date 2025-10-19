@@ -22,6 +22,7 @@ void freeTensor(Tensor *p);
 int tensorCmp(Tensor *a, Tensor *b);
 void addTensor(Tensor *ans, Tensor *a, Tensor *b);
 void assignTensor(Tensor *p, const char *para);
+void assignTensorWithNum(Tensor *p, double var);
 void multiMatrix(Tensor *ans, Tensor *a, Tensor *b);
 Tensor *transMatrix(Tensor *p, Tensor *p_t);
 void assignTensorFromMemory(Tensor *p, double *a);
@@ -29,4 +30,5 @@ double *address(Tensor *p, int index);
 void dimOfTensor(Tensor *p);
 void addScalarToTensor(Tensor *p, double var);
 void mutilScalarToTensor(Tensor *p, double var);
+void elementWiseMutil(Tensor *ans, Tensor *a, Tensor *b);
 #endif

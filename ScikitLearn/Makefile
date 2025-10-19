@@ -6,7 +6,7 @@ all: test.a run
 
 # Biên dịch chương trình
 test.a: src/*.c $(test_file)
-	gcc -Iinclude src/*.c $(test_file) -o test.a -lm
+	gcc -Iinclude src/logistic_regression.c src/load_data.c src/tensor.c src/utils.c $(test_file) -o test.a -lm
 
 # Chạy chương trình
 run:
@@ -14,7 +14,7 @@ run:
 
 # Biên dịch với debug symbols để dùng gdb
 debug: src/*.c $(test_file)
-	gcc -g -Iinclude src/*.c $(test_file) -o test.a -lm
+	gcc -g -Iinclude src/logistic_regression.c src/load_data.c src/tensor.c src/utils.c $(test_file) -o test.a -lm
 	gdb test.a
 
 # Dọn dẹp file biên dịch
